@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'palette-red': '#A36361',
+                        'palette-pink': '#D3A29D', 
+                        'palette-peach': '#E8B298',
+                        'palette-yellow': '#EECC8C',
+                        'palette-sage': '#BDD1C5',
+                        'palette-green': '#9EABA2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-palette-yellow/20 via-white to-palette-sage/20 min-h-screen flex flex-col">
+    <!-- Header/Navbar -->
+    <header class="bg-white/90 backdrop-blur-sm shadow-sm border-b border-palette-pink/20">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="{% url 'dashboard' %}" class="flex items-center">
+                        <span class="text-2xl font-bold text-palette-red">VocabVault</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{% url 'dashboard' %}" class="text-palette-red hover:text-palette-pink transition-colors font-medium border-b-2 border-palette-red/30">Dashboard</a>
+                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Quizzes</a>
+                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Flashcards</a>
+                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Vocab Builder</a>
+                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Profile</a>
+                    <a href="{% url 'logout' %}" class="bg-palette-sage text-white px-4 py-2 rounded-xl hover:bg-palette-green transition-colors font-medium">Logout</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="text-palette-red hover:text-palette-pink focus:outline-none focus:text-palette-pink" id="mobile-menu-button">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-sm rounded-b-xl border-t border-palette-pink/20">
+                    <a href="{% url 'dashboard' %}" class="block px-3 py-2 text-palette-red hover:text-palette-pink font-medium bg-palette-red/10 rounded-lg">Dashboard</a>
+                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Quizzes</a>
+                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Flashcards</a>
+                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Vocab Builder</a>
+                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Profile</a>
+                    <a href="{% url 'logout' %}" class="block px-3 py-2 bg-palette-sage text-white rounded-lg hover:bg-palette-green font-medium">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Welcome Section -->
+        {% block content %}
+        <section class="py-12 px-4">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-gradient-to-r from-palette-peach/30 to-palette-yellow/30 rounded-3xl p-8 mb-8 border border-palette-peach/20">
+                    <h1 class="text-3xl md:text-4xl font-bold text-palette-red mb-4">
+                        Welcome back to VocabVault! 👋
+                    </h1>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Ready to expand your vocabulary? Choose from the tools below to continue your learning journey.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="bg-white/80 px-4 py-2 rounded-xl">
+                            <span class="text-sm text-gray-600">Words Learned:</span>
+                            <span class="font-bold text-palette-red ml-2">247</span>
+                        </div>
+                        <div class="bg-white/80 px-4 py-2 rounded-xl">
+                            <span class="text-sm text-gray-600">Current Streak:</span>
+                            <span class="font-bold text-palette-sage ml-2">12 days</span>
+                        </div>
+                        <div class="bg-white/80 px-4 py-2 rounded-xl">
+                            <span class="text-sm text-gray-600">Accuracy:</span>
+                            <span class="font-bold text-palette-green ml-2">85%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Cards Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Quizzes Card -->
+                    <div class="group bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-palette-pink/20 hover:border-palette-pink/40">
+                        <div class="w-12 h-12 bg-gradient-to-br from-palette-red to-palette-pink rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-palette-red mb-2">Interactive Quizzes</h3>
+                        <p class="text-gray-600 mb-4">Test your knowledge with adaptive quizzes that challenge you at the right level.</p>
+                        <a href="#" class="inline-flex items-center text-palette-sage hover:text-palette-green font-medium transition-colors">
+                            Start Quiz
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Flashcards Card -->
+                    <div class="group bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-palette-yellow/30 hover:border-palette-yellow/50">
+                        <div class="w-12 h-12 bg-gradient-to-br from-palette-yellow to-palette-peach rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-palette-red mb-2">Digital Flashcards</h3>
+                        <p class="text-gray-600 mb-4">Review and memorize vocabulary with our smart flashcard system.</p>
+                        <a href="#" class="inline-flex items-center text-palette-sage hover:text-palette-green font-medium transition-colors">
+                            Study Cards
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Vocab Builder Card -->
+                    <div class="group bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-palette-sage/30 hover:border-palette-sage/50">
+                        <div class="w-12 h-12 bg-gradient-to-br from-palette-sage to-palette-green rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-palette-red mb-2">Vocab Builder</h3>
+                        <p class="text-gray-600 mb-4">Add new words to your personal vocabulary collection and track progress.</p>
+                        <a href="#" class="inline-flex items-center text-palette-sage hover:text-palette-green font-medium transition-colors">
+                            Add Words
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Progress Tracker Card -->
+                    <div class="group bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-palette-pink/20 hover:border-palette-pink/40">
+                        <div class="w-12 h-12 bg-gradient-to-br from-palette-pink to-palette-red rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-palette-red mb-2">Progress Tracker</h3>
+                        <p class="text-gray-600 mb-4">Monitor your learning journey with detailed analytics and insights.</p>
+                        <a href="#" class="inline-flex items-center text-palette-sage hover:text-palette-green font-medium transition-colors">
+                            View Progress
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Settings Card -->
+                    <div class="group bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-palette-green/30 hover:border-palette-green/50">
+                        <div class="w-12 h-12 bg-gradient-to-br from-palette-green to-palette-sage rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <!-- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2. -->
+
+        {% endblock%}
