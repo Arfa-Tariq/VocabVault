@@ -21,51 +21,114 @@
         }
     </script>
 </head>
-<body class="bg-gradient-to-br from-palette-yellow/20 via-white to-palette-sage/20 min-h-screen flex flex-col">
-    <!-- Header/Navbar -->
-    <header class="bg-white/90 backdrop-blur-sm shadow-sm border-b border-palette-pink/20">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="{% url 'dashboard' %}" class="flex items-center">
-                        <span class="text-2xl font-bold text-palette-red">VocabVault</span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VocabVault{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'palette-red': '#A36361',
+                        'palette-pink': '#D3A29D',
+                        'palette-peach': '#E8B298',
+                        'palette-yellow': '#EECC8C',
+                        'palette-sage': '#BDD1C5',
+                        'palette-green': '#9EABA2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white min-h-screen flex flex-col">
+{% block navbar %}
+<header class="bg-white shadow-lg sticky top-0 z-50">
+    <nav class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="{% url 'dashboard' %}" class="text-2xl font-bold text-palette-red">
+                    VocabVault
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="{% url 'dashboard' %}"
+                       class="text-palette-red hover:bg-palette-yellow hover:text-palette-red px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Dashboard
+                    </a>
+                    <a href="#"
+                       class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Vocabulary
+                    </a>
+                    <a href="#"
+                       class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Flashcards
+                    </a>
+                    <a href="#"
+                       class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Quizzes
+                    </a>
+                    <a href="#"
+                       class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        Profile
+                    </a>
+                    <a href="{% url 'logout' %}"
+                       class="bg-palette-red hover:bg-palette-pink text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                        Logout
                     </a>
                 </div>
-
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="{% url 'dashboard' %}" class="text-palette-red hover:text-palette-pink transition-colors font-medium border-b-2 border-palette-red/30">Dashboard</a>
-                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Quizzes</a>
-                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Flashcards</a>
-                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Vocab Builder</a>
-                    <a href="#" class="text-gray-600 hover:text-palette-red transition-colors font-medium">Profile</a>
-                    <a href="{% url 'logout' %}" class="bg-palette-sage text-white px-4 py-2 rounded-xl hover:bg-palette-green transition-colors font-medium">Logout</a>
-                </div>
-
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button type="button" class="text-palette-red hover:text-palette-pink focus:outline-none focus:text-palette-pink" id="mobile-menu-button">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
             </div>
 
-            <!-- Mobile Navigation -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 backdrop-blur-sm rounded-b-xl border-t border-palette-pink/20">
-                    <a href="{% url 'dashboard' %}" class="block px-3 py-2 text-palette-red hover:text-palette-pink font-medium bg-palette-red/10 rounded-lg">Dashboard</a>
-                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Quizzes</a>
-                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Flashcards</a>
-                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Vocab Builder</a>
-                    <a href="#" class="block px-3 py-2 text-gray-600 hover:text-palette-red font-medium">Profile</a>
-                    <a href="{% url 'logout' %}" class="block px-3 py-2 bg-palette-sage text-white rounded-lg hover:bg-palette-green font-medium">Logout</a>
-                </div>
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" type="button"
+                        class="text-palette-red hover:text-palette-pink focus:outline-none focus:text-palette-pink">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
             </div>
-        </nav>
-    </header>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+                <a href="{% url 'dashboard' %}"
+                   class="text-palette-red hover:bg-palette-yellow block px-3 py-2 rounded-md text-base font-medium">
+                    Dashboard
+                </a>
+                <a href="#"
+                   class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red block px-3 py-2 rounded-md text-base font-medium">
+                    Vocabulary
+                </a>
+                <a href="#"
+                   class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red block px-3 py-2 rounded-md text-base font-medium">
+                    Flashcards
+                </a>
+                <a href="#"
+                   class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red block px-3 py-2 rounded-md text-base font-medium">
+                    Quizzes
+                </a>
+                <a href="#"
+                   class="text-gray-600 hover:bg-palette-yellow hover:text-palette-red block px-3 py-2 rounded-md text-base font-medium">
+                    Profile
+                </a>
+                <a href="{% url 'logout' %}"
+                   class="bg-palette-red hover:bg-palette-pink text-white block px-3 py-2 rounded-md text-base font-medium">
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock %}
 
     <!-- Main Content -->
     <main class="flex-grow">
