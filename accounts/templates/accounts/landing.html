@@ -1,4 +1,3 @@
-<!-- landing.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,169 +5,898 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VocabVault - Secure your words. Unlock your fluency.</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'vocab-burgundy': '#A36361',
-                        'vocab-rose': '#D3A29D',
-                        'vocab-peach': '#E8B298',
-                        'vocab-cream': '#EECC8C',
-                        'vocab-mint': '#BDD1C5',
-                        'vocab-sage': '#9EABA2'
+                        'brand-blue': '#70B8F5',
+                        'brand-light-blue': '#A8D0F7',
+                        'brand-deep-blue': '#4A7C9D',
+                        'brand-lavender': '#E8E4F6',
+                        'brand-gold': '#FFB84D',
+                        'brand-orange': '#FF9A56',
+                        'brand-mint': '#7ED8C7',
+                        'brand-purple': '#B8A9E8',
+                        'brand-gray': '#8B9AAF',
+                        'brand-dark': '#2D3748'
                     }
                 }
             }
         }
     </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .dark {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #ffffff;
+        }
+        
+        .light {
+            background: linear-gradient(135deg, #E8E4F6, #F0ECFF);
+            color: #2D3748;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #70B8F5, #A8D0F7);
+        }
+        
+        .cta-gradient {
+            background: linear-gradient(135deg, #FFB84D, #FF9A56);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-animation:nth-child(odd) {
+            animation-delay: -3s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .blob {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morph 8s ease-in-out infinite;
+        }
+        
+        @keyframes morph {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .rocket-animation {
+            animation: rocket 4s ease-in-out infinite;
+        }
+        
+        @keyframes rocket {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(2deg); }
+            75% { transform: translateY(-5px) rotate(-2deg); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(112, 184, 245, 0.4); }
+            to { box-shadow: 0 0 30px rgba(112, 184, 245, 0.8); }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #70B8F5, #4A7C9D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .dark .text-gradient {
+            background: linear-gradient(135deg, #A8D0F7, #70B8F5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, #70B8F5, #A8D0F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFB84D, #FF9A56);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .stats-counter {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #70B8F5;
+        }
+        
+        .parallax-element {
+            transform: translateZ(0);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        .mode-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #4A7C9D;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .mode-toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .dark .mode-toggle {
+            background: #FFB84D;
+        }
+        
+        .dark .mode-toggle::after {
+            transform: translateX(30px);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .testimonial-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-vocab-cream via-vocab-peach to-vocab-rose min-h-screen">
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center px-4">
-        <div class="text-center max-w-4xl mx-auto">
-            <div class="mb-8">
-                <h1 class="text-6xl md:text-8xl font-bold text-white mb-4 drop-shadow-lg">
-                    VocabVault
-                </h1>
-                <p class="text-2xl md:text-3xl text-vocab-burgundy font-medium mb-8">
-                    "Secure your words. Unlock your fluency."
-                </p>
+<body class="light min-h-screen transition-all duration-300">
+    <!-- Theme Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <div class="mode-toggle" onclick="toggleTheme()">
+            <i class="fas fa-sun absolute top-1/2 left-2 transform -translate-y-1/2 text-xs text-white"></i>
+            <i class="fas fa-moon absolute top-1/2 right-2 transform -translate-y-1/2 text-xs text-white"></i>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-xl flex items-center justify-center">
+                        <i class="fas fa-vault text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gradient">VocabVault</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link px-3 py-2 rounded-md text-sm font-medium hover:text-brand-blue transition-colors">Home</a>
+                    <a href="#features" class="nav-link px-3 py-2 rounded-md text-sm font-medium hover:text-brand-blue transition-colors">Features</a>
+                    <a href="#about" class="nav-link px-3 py-2 rounded-md text-sm font-medium hover:text-brand-blue transition-colors">About</a>
+                    <a href="#contact" class="nav-link px-3 py-2 rounded-md text-sm font-medium hover:text-brand-blue transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex space-x-3">
+                    <a href="{% url 'login' %}" class="px-4 py-2 text-sm font-medium text-brand-blue hover:text-brand-deep-blue transition-colors">
+                        Login
+                    </a>
+                    <a href="{% url 'signup' %}" class="px-4 py-2 text-sm font-medium text-white cta-gradient rounded-lg hover:shadow-lg transform hover:scale-105 transition-all">
+                        Sign Up
+                    </a>
+                </div>
             </div>
-            
-            <div class="space-y-4 md:space-y-0 md:space-x-6 md:flex md:justify-center">
-                <a href="{% url 'login' %}" 
-                   class="inline-block bg-vocab-burgundy hover:bg-opacity-90 text-white font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    Login
-                </a>
-                <a href="{% url 'signup' %}" 
-                   class="inline-block bg-vocab-sage hover:bg-opacity-90 text-white font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    Create an Account
-                </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-20 left-10 w-32 h-32 bg-brand-purple rounded-full blob floating-animation"></div>
+            <div class="absolute top-40 right-20 w-24 h-24 bg-brand-mint rounded-full blob floating-animation"></div>
+            <div class="absolute bottom-40 left-20 w-40 h-40 bg-brand-light-blue rounded-full blob floating-animation"></div>
+            <div class="absolute bottom-20 right-10 w-28 h-28 bg-brand-gold rounded-full blob floating-animation"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="text-center lg:text-left space-y-8">
+                    <div class="space-y-4">
+                        <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                            <span class="text-gradient">Boost</span><br>
+                            <span class="text-white">Your Vocabulary</span>
+                        </h1>
+                        <div class="w-32 h-1 cta-gradient mx-auto lg:mx-0"></div>
+                        <p class="text-xl text-brand-gray max-w-md mx-auto lg:mx-0">
+                            Secure your words. Unlock your fluency. Master German vocabulary with personalized flashcards, XP-powered quizzes, and smart organization.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="{% url 'signup' %}" class="px-8 py-4 text-lg font-semibold text-white cta-gradient rounded-full hover:shadow-2xl transform hover:scale-105 transition-all pulse-glow">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Create Account
+                        </a>
+                        <button onclick="scrollToFeatures()" class="px-8 py-4 text-lg font-semibold text-brand-blue bg-white rounded-full hover:shadow-xl transform hover:scale-105 transition-all">
+                            <i class="fas fa-play mr-2"></i>
+                            Learn More
+                        </button>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 pt-8">
+                        <div class="text-center">
+                            <div class="stats-counter" data-target="50000">0</div>
+                            <p class="text-sm text-brand-gray">Words Learned</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="stats-counter" data-target="10000">0</div>
+                            <p class="text-sm text-brand-gray">Happy Learners</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="stats-counter" data-target="98">0</div>
+                            <p class="text-sm text-brand-gray">Success Rate</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Visual -->
+                <div class="relative">
+                    <div class="relative w-full max-w-md mx-auto">
+                        <!-- Phone Mockup -->
+                        <div class="relative bg-white rounded-[3rem] p-2 shadow-2xl">
+                            <div class="bg-gradient-to-br from-brand-lavender to-white rounded-[2.5rem] p-6 h-96 flex flex-col items-center justify-center space-y-6">
+                                <!-- Character -->
+                                <div class="relative">
+                                    <div class="w-24 h-24 bg-brand-light-blue rounded-full flex items-center justify-center rocket-animation">
+                                        <i class="fas fa-user-graduate text-3xl text-brand-deep-blue"></i>
+                                    </div>
+                                    <div class="absolute -top-2 -right-2 w-6 h-6 bg-brand-gold rounded-full flex items-center justify-center">
+                                        <i class="fas fa-crown text-xs text-white"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="text-center space-y-2">
+                                    <h3 class="text-lg font-bold text-brand-dark">Are you ready?</h3>
+                                    <p class="text-sm text-brand-gray">Start your vocabulary journey</p>
+                                </div>
+                                
+                                <button class="w-full py-3 cta-gradient text-white rounded-2xl font-semibold shadow-lg">
+                                    Start Learning
+                                </button>
+                                
+                                <!-- Floating Elements -->
+                                <div class="absolute -top-4 -left-4 w-8 h-8 bg-brand-purple rounded-lg rotating-animation"></div>
+                                <div class="absolute -bottom-4 -right-4 w-6 h-6 bg-brand-mint rounded-full floating-animation"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Elements Around Phone -->
+                        <div class="absolute -top-8 -right-8 w-16 h-16 bg-brand-gold rounded-2xl flex items-center justify-center floating-animation shadow-lg">
+                            <i class="fas fa-book text-white text-xl"></i>
+                        </div>
+                        <div class="absolute -bottom-8 -left-8 w-12 h-12 bg-brand-mint rounded-full flex items-center justify-center floating-animation shadow-lg">
+                            <i class="fas fa-star text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="w-6 h-10 border-2 border-brand-blue rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-brand-blue rounded-full mt-2 animate-pulse"></div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 bg-white bg-opacity-20 backdrop-blur-sm">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl md:text-5xl font-bold text-center text-vocab-burgundy mb-16">
-                Powerful Features
-            </h2>
+    <section id="features" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gradient mb-4">Powerful Features</h2>
+                <p class="text-xl text-brand-gray max-w-2xl mx-auto">Everything you need to master vocabulary efficiently and enjoyably</p>
+            </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white bg-opacity-90 rounded-2xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-vocab-burgundy rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                        </svg>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-hover bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 hero-gradient rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-plus text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-vocab-burgundy mb-3">Smart Vocabulary</h3>
-                    <p class="text-gray-600">Build your personal vocabulary vault with intelligent word management and categorization.</p>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">Vocab Builder</h3>
+                    <p class="text-brand-gray">Add German words with meanings, personal notes, and custom tags. Organize by themes, chapters, or difficulty levels.</p>
                 </div>
-
-                <div class="bg-white bg-opacity-90 rounded-2xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-vocab-rose rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                        </svg>
+                
+                <!-- Feature 2 -->
+                <div class="card-hover bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-mint to-brand-purple rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-book-open text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-vocab-burgundy mb-3">Interactive Quizzes</h3>
-                    <p class="text-gray-600">Test your knowledge with adaptive quizzes that adjust to your learning pace and style.</p>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">Smart Library</h3>
+                    <p class="text-brand-gray">Browse, search, and filter your vocabulary collection. Your personal dictionary with intelligent categorization.</p>
                 </div>
-
-                <div class="bg-white bg-opacity-90 rounded-2xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-vocab-mint rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                        </svg>
+                
+                <!-- Feature 3 -->
+                <div class="card-hover bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-gold to-brand-orange rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-cards-blank text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-vocab-burgundy mb-3">Digital Flashcards</h3>
-                    <p class="text-gray-600">Create and study with beautifully designed flashcards that make learning enjoyable.</p>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">Flashcards</h3>
+                    <p class="text-brand-gray">Interactive flashcards with spaced repetition algorithms. Perfect for visual memory and retention.</p>
                 </div>
-
-                <div class="bg-white bg-opacity-90 rounded-2xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-vocab-sage rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
+                
+                <!-- Feature 4 -->
+                <div class="card-hover bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-gamepad text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-vocab-burgundy mb-3">Progress Tracking</h3>
-                    <p class="text-gray-600">Monitor your learning journey with detailed analytics and achievement milestones.</p>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">XP Quizzes</h3>
+                    <p class="text-brand-gray">Gamified learning with XP rewards. Challenge yourself and track your progress with fun, adaptive quizzes.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="card-hover bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-purple to-brand-mint rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">Progress Tracking</h3>
+                    <p class="text-brand-gray">Detailed analytics on your learning journey. See your growth, identify weak areas, and celebrate achievements.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="card-hover bg-white rounded-3xl p-8 shadow-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-orange to-brand-gold rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-user-circle text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">Personal Profile</h3>
+                    <p class="text-brand-gray">Customize your experience. View stats, manage settings, and track your vocabulary mastery journey.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="py-20 bg-vocab-burgundy bg-opacity-10">
-        <div class="container mx-auto px-4 max-w-4xl text-center">
-            <h2 class="text-4xl md:text-5xl font-bold text-vocab-burgundy mb-8">About VocabVault</h2>
-            <div class="text-lg text-gray-700 space-y-6">
-                <p>
-                    VocabVault is more than just a vocabulary app—it's your personal language learning companion designed to make vocabulary acquisition engaging, efficient, and enjoyable. Our mission is to help learners of all levels build a robust vocabulary foundation through innovative study methods and personalized learning experiences.
-                </p>
-                <p>
-                    Whether you're preparing for standardized tests, learning a new language, or simply looking to expand your word knowledge, VocabVault provides the tools and features you need to succeed. Join thousands of learners who have already unlocked their linguistic potential with our secure, user-friendly platform.
-                </p>
+    <section id="about" class="py-20 bg-gradient-to-br from-brand-lavender to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gradient">Our Mission</h2>
+                    <p class="text-lg text-brand-gray leading-relaxed">
+                        We believe that mastering a new language shouldn't be overwhelming. VocabVault was created to solve the challenge of vocabulary retention by providing a structured, personalized, and enjoyable learning experience.
+                    </p>
+                    <p class="text-lg text-brand-gray leading-relaxed">
+                        Starting with German, we're building a platform that adapts to your learning style, remembers your progress, and makes every word count. Our goal is to help you build lasting vocabulary knowledge that unlocks real fluency.
+                    </p>
+                    <div class="flex space-x-6 pt-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 hero-gradient rounded-2xl flex items-center justify-center mb-2">
+                                <i class="fas fa-target text-white text-2xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-brand-dark">Focused Learning</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-brand-mint to-brand-purple rounded-2xl flex items-center justify-center mb-2">
+                                <i class="fas fa-heart text-white text-2xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-brand-dark">Passion Driven</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-brand-gold to-brand-orange rounded-2xl flex items-center justify-center mb-2">
+                                <i class="fas fa-rocket text-white text-2xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-brand-dark">Results Oriented</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="relative bg-white rounded-3xl p-8 shadow-2xl">
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 hero-gradient rounded-full flex items-center justify-center">
+                                    <i class="fas fa-language text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-brand-dark">Multi-Language Ready</h4>
+                                    <p class="text-sm text-brand-gray">Expanding beyond German soon</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-brand-mint to-brand-purple rounded-full flex items-center justify-center">
+                                    <i class="fas fa-brain text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-brand-dark">Science-Based</h4>
+                                    <p class="text-sm text-brand-gray">Built on proven learning principles</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-brand-gold to-brand-orange rounded-full flex items-center justify-center">
+                                    <i class="fas fa-mobile-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-brand-dark">Learn Anywhere</h4>
+                                    <p class="text-sm text-brand-gray">Fully responsive design</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 w-8 h-8 bg-brand-mint rounded-lg floating-animation"></div>
+                    <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-brand-gold rounded-full floating-animation"></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-vocab-burgundy text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">VocabVault</h3>
-                    <p class="text-vocab-rose">Secure your words. Unlock your fluency.</p>
+    <!-- Testimonials Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gradient mb-4">What Learners Say</h2>
+                <p class="text-xl text-brand-gray">Real feedback from our vocabulary masters</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="testimonial-card rounded-3xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-brand-blue rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">S</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Sarah Chen</h4>
+                            <p class="text-sm text-brand-gray">German Student</p>
+                        </div>
+                    </div>
+                    <p class="text-brand-gray italic">"VocabVault transformed my German learning. The flashcards and XP system keep me motivated every day!"</p>
+                    <div class="flex mt-4">
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                    </div>
                 </div>
                 
-                <div>
-                    <h4 class="font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-vocab-rose hover:text-white transition-colors">Features</a></li>
-                        <li><a href="#" class="text-vocab-rose hover:text-white transition-colors">About</a></li>
-                        <li><a href="#" class="text-vocab-rose hover:text-white transition-colors">Contact</a></li>
-                        <li><a href="#" class="text-vocab-rose hover:text-white transition-colors">Support</a></li>
-                    </ul>
+                <div class="testimonial-card rounded-3xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-brand-mint rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">M</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Marcus Weber</h4>
+                            <p class="text-sm text-brand-gray">Language Enthusiast</p>
+                        </div>
+                    </div>
+                    <p class="text-brand-gray italic">"The organization features are incredible. I can finally keep track of all my vocabulary in one place."</p>
+                    <div class="flex mt-4">
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                                                <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                    </div>
                 </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">Legal</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-vocab-rose hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="text-vocab-rose hover:text-white transition-colors">Terms of Service</a></li>
-                        <li><a href="#" class="text-vocab-rose hover:text-white transition-colors">Cookie Policy</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">Follow Us</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-vocab-rose hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-vocab-rose hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="text-vocab-rose hover:text-white transition-colors">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.219-.359-1.219c0-1.142.662-1.995 1.488-1.995.702 0 1.041.219 1.041 1.219 0 .738-.469 1.844-.711 2.868-.203.855.428 1.551 1.271 1.551 1.525 0 2.697-1.609 2.697-3.933 0-2.059-1.474-3.496-3.585-3.496-2.441 0-3.877 1.833-3.877 3.727 0 .738.284 1.526.639 1.955.07.086.08.162.059.25-.065.270-.211.859-.24.979-.037.162-.123.196-.283.118-1.075-.5-1.746-2.057-1.746-3.312 0-2.696 1.957-5.173 5.651-5.173 2.966 0 5.271 2.117 5.271 4.921 0 2.938-1.848 5.30-4.428 5.30-0.864 0-1.679-.449-1.957-.985 0 0-.428 1.642-.533 2.037-.193.738-.719 1.664-1.070 2.23.805.248 1.655.381 2.535.381 6.624 0 11.99-5.367 11.99-11.99C24.007 5.367 18.641.001 12.017.001z"/>
-                            </svg>
-                        </a>
+
+                <div class="testimonial-card rounded-3xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-brand-purple rounded-full flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">A</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Anna Müller</h4>
+                            <p class="text-sm text-brand-gray">Beginner Learner</p>
+                        </div>
+                    </div>
+                    <p class="text-brand-gray italic">"I love how fun and easy VocabVault makes it to learn. The visuals and gamification make it addicting!"</p>
+                    <div class="flex mt-4">
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star text-brand-gold"></i>
+                        <i class="fas fa-star-half-alt text-brand-gold"></i>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <!-- Enhanced Contact Section -->
+<section id="contact" class="py-20 relative overflow-hidden">
+    <!-- Dynamic Background -->
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-lavender via-purple-50 to-blue-50"></div>
+    
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-brand-mint rounded-full blob floating-animation"></div>
+        <div class="absolute top-40 right-20 w-24 h-24 bg-brand-gold rounded-full blob floating-animation"></div>
+        <div class="absolute bottom-40 left-20 w-40 h-40 bg-brand-purple rounded-full blob floating-animation"></div>
+        <div class="absolute bottom-10 right-10 w-20 h-20 bg-brand-blue rounded-full blob floating-animation"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-3xl mb-6 pulse-glow">
+                <i class="fas fa-envelope text-white text-2xl"></i>
+            </div>
+            <h2 class="text-5xl md:text-6xl font-bold text-gradient mb-6">Get in Touch</h2>
+            <p class="text-xl text-brand-gray max-w-2xl mx-auto leading-relaxed">
+                Have questions, feedback, or partnership ideas? We'd love to hear from you! 
+                Your thoughts help us build a better learning experience.
+            </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <!-- Contact Form -->
+            <div class="glass-effect rounded-3xl p-8 shadow-2xl">
+                <h3 class="text-2xl font-bold text-brand-dark mb-6 flex items-center">
+                    <i class="fas fa-paper-plane mr-3 text-brand-blue"></i>
+                    Send us a message
+                </h3>
+                
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="relative">
+                            <input type="text" placeholder="Your Name" class="w-full px-6 py-4 rounded-xl border-2 border-transparent bg-white focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/20 outline-none transition-all shadow-lg" required>
+                            <i class="fas fa-user absolute right-4 top-5 text-brand-gray"></i>
+                        </div>
+                        <div class="relative">
+                            <input type="email" placeholder="Your Email" class="w-full px-6 py-4 rounded-xl border-2 border-transparent bg-white focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/20 outline-none transition-all shadow-lg" required>
+                            <i class="fas fa-envelope absolute right-4 top-5 text-brand-gray"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <input type="text" placeholder="Subject" class="w-full px-6 py-4 rounded-xl border-2 border-transparent bg-white focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/20 outline-none transition-all shadow-lg" required>
+                        <i class="fas fa-tag absolute right-4 top-5 text-brand-gray"></i>
+                    </div>
+                    
+                    <div class="relative">
+                        <textarea placeholder="Your Message" rows="6" class="w-full px-6 py-4 rounded-xl border-2 border-transparent bg-white focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/20 outline-none transition-all shadow-lg resize-none" required></textarea>
+                        <i class="fas fa-comment absolute right-4 top-5 text-brand-gray"></i>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="newsletter" class="w-5 h-5 rounded border-2 border-brand-blue text-brand-blue focus:ring-brand-blue">
+                        <label for="newsletter" class="text-sm text-brand-gray">Subscribe to our newsletter for learning tips and updates</label>
+                    </div>
+                    
+                    <button type="submit" class="w-full px-8 py-4 text-lg font-semibold text-white cta-gradient rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all pulse-glow">
+                        <i class="fas fa-rocket mr-3"></i>Send Message
+                    </button>
+                </form>
+            </div>
             
-            <div class="border-t border-vocab-rose mt-8 pt-8 text-center">
-                <p class="text-vocab-rose">&copy; 2025 VocabVault. All rights reserved.</p>
+            <!-- Contact Information & Alternative Methods -->
+            <div class="space-y-8">
+                <!-- Quick Contact Cards -->
+                <div class="grid gap-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-xl card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-envelope text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-lg">Email Us</h4>
+                                <p class="text-brand-gray">hello@vocabvault.com</p>
+                                <p class="text-sm text-brand-gray">We respond within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl p-6 shadow-xl card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-brand-mint to-brand-purple rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-comments text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-lg">Live Chat</h4>
+                                <p class="text-brand-gray">Available 9 AM - 6 PM EST</p>
+                                <p class="text-sm text-brand-gray">Get instant help from our team</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl p-6 shadow-xl card-hover">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-brand-gold to-brand-orange rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-question-circle text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark text-lg">Help Center</h4>
+                                <p class="text-brand-gray">Find answers instantly</p>
+                                <p class="text-sm text-brand-gray">Browse our comprehensive FAQ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Connect -->
+                <div class="bg-white rounded-3xl p-8 shadow-xl">
+                    <h4 class="text-xl font-bold text-brand-dark mb-6 flex items-center">
+                        <i class="fas fa-users mr-3 text-brand-purple"></i>
+                        Connect With Us
+                    </h4>
+                    <p class="text-brand-gray mb-6">Join our community of language learners and get daily tips, motivation, and exclusive content!</p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <a href="#" class="flex items-center justify-center space-x-3 py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all">
+                            <i class="fab fa-facebook-f"></i>
+                            <span class="font-semibold">Facebook</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-center space-x-3 py-3 px-4 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all">
+                            <i class="fab fa-twitter"></i>
+                            <span class="font-semibold">Twitter</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-center space-x-3 py-3 px-4 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all">
+                            <i class="fab fa-instagram"></i>
+                            <span class="font-semibold">Instagram</span>
+                        </a>
+                        <a href="#" class="flex items-center justify-center space-x-3 py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all">
+                            <i class="fab fa-linkedin-in"></i>
+                            <span class="font-semibold">LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Response Time Promise -->
+                <div class="bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-3xl p-8 text-white">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-clock text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Quick Response Promise</h4>
+                            <p class="text-blue-100">We value your time</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-brand-mint"></i>
+                            <span>Email responses within 24 hours</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-brand-mint"></i>
+                            <span>Live chat support during business hours</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-brand-mint"></i>
+                            <span>Priority support for subscribers</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
+
+    <!-- Enhanced Footer -->
+<footer class="relative py-20 bg-gradient-to-br from-brand-dark via-gray-900 to-brand-deep-blue text-white overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-brand-blue rounded-full blob floating-animation"></div>
+        <div class="absolute top-20 right-20 w-16 h-16 bg-brand-mint rounded-full blob floating-animation"></div>
+        <div class="absolute bottom-20 left-20 w-24 h-24 bg-brand-gold rounded-full blob floating-animation"></div>
+        <div class="absolute bottom-10 right-10 w-12 h-12 bg-brand-purple rounded-full blob floating-animation"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Main Footer Content -->
+        <div class="grid md:grid-cols-4 gap-8 mb-12">
+            <!-- Brand Column -->
+            <div class="md:col-span-1">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-xl flex items-center justify-center pulse-glow">
+                        <i class="fas fa-vault text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-gradient">VocabVault</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed mb-6">
+                    Secure your words. Unlock your fluency. The most engaging way to master German vocabulary.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                        <i class="fab fa-facebook-f text-sm"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gradient-to-br from-brand-mint to-brand-purple rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                        <i class="fab fa-twitter text-sm"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gradient-to-br from-brand-gold to-brand-orange rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                        <i class="fab fa-instagram text-sm"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gradient-to-br from-brand-purple to-brand-blue rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                        <i class="fab fa-linkedin-in text-sm"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-lg font-semibold mb-6 text-white">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="#home" class="text-gray-400 hover:text-brand-blue transition-colors flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                    <li><a href="#features" class="text-gray-400 hover:text-brand-blue transition-colors flex items-center"><i class="fas fa-star mr-2 text-xs"></i>Features</a></li>
+                    <li><a href="#about" class="text-gray-400 hover:text-brand-blue transition-colors flex items-center"><i class="fas fa-info-circle mr-2 text-xs"></i>About</a></li>
+                    <li><a href="#contact" class="text-gray-400 hover:text-brand-blue transition-colors flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
+                </ul>
+            </div>
+            
+            <!-- Learning -->
+            <div>
+                <h4 class="text-lg font-semibold mb-6 text-white">Learning</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-gray-400 hover:text-brand-mint transition-colors flex items-center"><i class="fas fa-book mr-2 text-xs"></i>Vocabulary</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-brand-mint transition-colors flex items-center"><i class="fas fa-cards-blank mr-2 text-xs"></i>Flashcards</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-brand-mint transition-colors flex items-center"><i class="fas fa-gamepad mr-2 text-xs"></i>Quizzes</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-brand-mint transition-colors flex items-center"><i class="fas fa-chart-line mr-2 text-xs"></i>Progress</a></li>
+                </ul>
+            </div>
+            
+            <!-- Newsletter -->
+            <div>
+                <h4 class="text-lg font-semibold mb-6 text-white">Stay Updated</h4>
+                <p class="text-gray-400 text-sm mb-4">Get the latest tips and updates delivered to your inbox.</p>
+                <div class="space-y-3">
+                    <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-brand-blue outline-none">
+                    <button class="w-full px-4 py-3 text-sm font-semibold text-white cta-gradient rounded-lg hover:shadow-lg transform hover:scale-105 transition-all">
+                        <i class="fas fa-paper-plane mr-2"></i>Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Divider -->
+        <div class="border-t border-gray-700 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-6">
+                    <p class="text-gray-400 text-sm">&copy; 2025 VocabVault. All rights reserved.</p>
+                    <div class="flex space-x-4 text-xs">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie Policy</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 text-gray-400 text-sm">
+                        <i class="fas fa-heart text-red-500"></i>
+                        <span>Made with love for language learners</span>
+                    </div>
+                    <div class="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center">
+                        <i class="fas fa-language text-white text-xs"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-14 h-14 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-full flex items-center justify-center shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all pulse-glow">
+            <i class="fas fa-arrow-up text-white text-lg"></i>
+        </button>
+    </div>
+</footer>
+
+    <!-- JavaScript for Theme and Counters -->
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark');
+            body.classList.toggle('light');
+        }
+
+        // Stats Counter Animation
+        const counters = document.querySelectorAll('.stats-counter');
+        const speed = 100;
+
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 30);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+
+        // Scroll to Features
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
