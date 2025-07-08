@@ -3,111 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - VocabVault</title>
+    <title>VocabVault - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'palette-red': '#A36361',
-                        'palette-pink': '#D3A29D', 
-                        'palette-peach': '#E8B298',
-                        'palette-yellow': '#EECC8C',
-                        'palette-sage': '#BDD1C5',
-                        'palette-green': '#9EABA2'
+                        'brand-blue': '#70B8F5',
+                        'brand-light-blue': '#A8D0F7',
+                        'brand-deep-blue': '#4A7C9D',
+                        'brand-lavender': '#E8E4F6',
+                        'brand-gold': '#FFB84D',
+                        'brand-orange': '#FF9A56',
+                        'brand-mint': '#7ED8C7',
+                        'brand-purple': '#B8A9E8',
+                        'brand-gray': '#8B9AAF',
+                        'brand-dark': '#2D3748'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .light {
+            background: linear-gradient(135deg, #E8E4F6, #F0ECFF);
+            color: #2D3748;
+        }
+        
+        .dark {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #E8E4F6;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #70B8F5, #4A7C9D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .dark .text-gradient {
+            background: linear-gradient(135deg, #A8D0F7, #70B8F5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .floating-blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-blob:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #70B8F5, #A8D0F7);
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+        
+        .floating-blob:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #B8A9E8, #E8E4F6);
+            top: 50%;
+            right: -100px;
+            animation-delay: 2s;
+        }
+        
+        .floating-blob:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #7ED8C7, #FFB84D);
+            bottom: -125px;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(112, 184, 245, 0.3);
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(112, 184, 245, 0.4); }
+            to { box-shadow: 0 0 40px rgba(112, 184, 245, 0.8); }
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(135deg, #70B8F5, #4A7C9D);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #4A7C9D, #70B8F5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(112, 184, 245, 0.4);
+        }
+        
+        .form-field {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .form-field {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #E8E4F6;
+        }
+        
+        .form-field:focus {
+            outline: none;
+            border-color: #70B8F5;
+            box-shadow: 0 0 0 3px rgba(112, 184, 245, 0.1);
+        }
+        
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .social-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8B9AAF;
+            font-size: 16px;
+        }
+        
+        .input-with-icon {
+            padding-left: 40px;
+        }
+        
+        .error-message {
+            color: #FF6B6B;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .success-message {
+            color: #7ED8C7;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-palette-yellow/30 via-palette-peach/20 to-palette-pink/30 min-h-screen flex items-center justify-center p-4">
-    <!-- Login Container -->
-    <div class="w-full max-w-md">
-        <!-- Logo -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-palette-red mb-2">VocabVault</h1>
-            <p class="text-palette-red/70">Welcome back!</p>
+
+<body class="light min-h-screen relative overflow-hidden">
+    <!-- Background Blobs -->
+    <div class="floating-blob"></div>
+    <div class="floating-blob"></div>
+    <div class="floating-blob"></div>
+    
+    <!-- Mode Toggle -->
+    <div class="mode-toggle" onclick="toggleMode()">
+        <i class="fas fa-moon text-brand-dark dark:text-brand-lavender"></i>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-xl flex items-center justify-center">
+                        <i class="fas fa-vault text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gradient">VocabVault</span>
+                </div>
+            </div>
         </div>
-
-        <!-- Login Form -->
-        <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-8 border border-palette-pink/20">
-            <form method="POST" action="{% url 'login' %}" class="space-y-6">
-                {% csrf_token %}                       
-                <!-- Username Field -->
-                <div>
-                    <label for="username" class="block text-sm font-medium text-palette-red mb-2">
-                        Username
-                    </label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        name="username" 
-                        required
-                        class="w-full px-4 py-3 rounded-xl border border-palette-pink/30 focus:border-palette-sage focus:ring-2 focus:ring-palette-sage/20 focus:outline-none transition-all duration-200 bg-white/80"
-                        placeholder="Enter your username"
-                    >
+    </nav>
+    
+    <!-- Login Page -->
+    <div class="min-h-screen flex items-center justify-center px-4 pt-16">
+        <div class="max-w-md w-full">
+            <div class="glass-effect rounded-2xl p-8 card-hover fade-in">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gradient mb-2">Welcome Back</h2>
+                    <p class="text-brand-gray">Sign in to your VocabVault account</p>
                 </div>
-
-                <!-- Password Field -->
-                <div>
-                    <label for="password" class="block text-sm font-medium text-palette-red mb-2">
-                        Password
-                    </label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        required
-                        class="w-full px-4 py-3 rounded-xl border border-palette-pink/30 focus:border-palette-sage focus:ring-2 focus:ring-palette-sage/20 focus:outline-none transition-all duration-200 bg-white/80"
-                        placeholder="Enter your password"
-                    >
-                </div>
-
-                <!-- Forgot Password Link -->
-                <div class="text-right">
-                    <a href="#" class="text-sm text-palette-sage hover:text-palette-green transition-colors">
-                        Forgot Password?
-                    </a>
-                </div>
-
-                <!-- Login Button -->
-                <button 
-                    type="submit" 
-                    class="w-full bg-gradient-to-r from-palette-sage to-palette-green text-white py-3 px-4 rounded-xl font-semibold hover:from-palette-green hover:to-palette-sage transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-palette-sage/50"
-                >
-                    Login
-                </button>
-
+                
+                <!-- Django Form would go here -->
+                <form method="post" action="{% url 'login' %}" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    <!-- Username Field -->
+                    <div class="relative">
+                        <i class="input-icon fas fa-user"></i>
+                        <input 
+                            type="text" 
+                            id="username"
+                            name="username" 
+                            placeholder="Username or Email"
+                            class="form-field w-full px-4 py-3 input-with-icon rounded-xl focus:ring-2 focus:ring-brand-blue"
+                            required
+                        />
+                    </div>
+                    
+                    <!-- Password Field -->
+                    <div class="relative">
+                        <i class="input-icon fas fa-lock"></i>
+                        <input 
+                            type="password" 
+                            name="password"
+                            id="password" 
+                            placeholder="Password"
+                            class="form-field w-full px-4 py-3 input-with-icon rounded-xl focus:ring-2 focus:ring-brand-blue"
+                            required
+                        />
+                    </div>
+                    
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="remember" class="mr-2 rounded">
+                            <span class="text-sm text-brand-gray">Remember me</span>
+                        </label>
+                        <a href="#" class="text-sm text-brand-blue hover:text-brand-deep-blue">Forgot password?</a>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-gradient w-full py-3 px-6 rounded-xl text-white font-semibold pulse-glow">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Sign In
+                    </button>
+                </form>
+                
                 <!-- Divider -->
-                <div class="relative my-6">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-palette-pink/30"></div>
-                    </div>
-                    <div class="relative flex justify-center text-sm">
-                        <span class="px-2 bg-white/90 text-gray-500">or</span>
-                    </div>
+                <div class="my-6 flex items-center">
+                    <div class="flex-1 border-t border-brand-gray/30"></div>
+                    <span class="mx-4 text-brand-gray text-sm">or</span>
+                    <div class="flex-1 border-t border-brand-gray/30"></div>
                 </div>
-
+                
+                <!-- Social Login -->
+                <div class="space-y-3">
+                    <button class="social-btn w-full py-3 px-6 rounded-xl bg-white/80 dark:bg-black/20 border border-brand-gray/30 flex items-center justify-center hover:bg-white/90 dark:hover:bg-black/30">
+                        <i class="fab fa-google mr-2 text-red-500"></i>
+                        Continue with Google
+                    </button>
+                    <button class="social-btn w-full py-3 px-6 rounded-xl bg-white/80 dark:bg-black/20 border border-brand-gray/30 flex items-center justify-center hover:bg-white/90 dark:hover:2-black/30">
+                        <i class="fab fa-facebook mr-2 text-blue-600"></i>
+                        Continue with Facebook
+                    </button>
+                </div>
+                
                 <!-- Sign Up Link -->
-                <div class="text-center">
-                    <p class="text-gray-600">
+                <div class="text-center mt-8">
+                    <p class="text-brand-gray">
                         Don't have an account? 
-                        <a href="{% url 'signup' %}" class="text-palette-sage hover:text-palette-green font-semibold transition-colors">
-                            Create Account
+                        <a href="signup.html" class="text-brand-blue hover:text-brand-deep-blue font-semibold">
+                            Sign up
                         </a>
                     </p>
                 </div>
-            </form>
-        </div>
-
-        <!-- Back to Home -->
-        <div class="text-center mt-6">
-            <a href="{% url 'landing'%}" class="text-palette-red/70 hover:text-palette-red transition-colors text-sm">
-                ← Back to Home
-            </a>
+            </div>
         </div>
     </div>
+    
+    <script>
+        function toggleMode() {
+            const body = document.body;
+            const modeIcon = document.querySelector('.mode-toggle i');
+            
+            if (body.classList.contains('light')) {
+                body.classList.remove('light');
+                body.classList.add('dark');
+                modeIcon.classList.remove('fa-moon');
+                modeIcon.classList.add('fa-sun');
+            } else {
+                body.classList.remove('dark');
+                body.classList.add('light');
+                modeIcon.classList.remove('fa-sun');
+                modeIcon.classList.add('fa-moon');
+            }
+        }
+        
+        // Form validation and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            
+            form.addEventListener('submit', function(e) {
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+                submitBtn.disabled = true;
+                
+                // For demo purposes, we'll reset after 2 seconds
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            });
+            
+            // Add focus animations to form fields
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('scale-105');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('scale-105');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
