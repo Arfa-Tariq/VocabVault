@@ -33,11 +33,16 @@
     </script>
     
     <style>
+        html{
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
+            background: none;
         }
-        
+                
         .light {
             background: linear-gradient(135deg, #E8E4F6, #F0ECFF);
             color: #2D3748;
@@ -53,7 +58,24 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
+
+        .bg-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -10;
+        }
+
+        .light .bg-wrapper {
+            background: linear-gradient(135deg, #E8E4F6, #F0ECFF);
+        }
+
+        .dark .bg-wrapper {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+                
         .dark .glass-effect {
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
@@ -162,6 +184,16 @@
             box-shadow: 0 0 0 3px rgba(112, 184, 245, 0.1);
         }
         
+        .form-field::placeholder {
+            color: #8B9AAF;
+            padding-left: 0;
+        }
+
+        .dark .form-field::placeholder {
+            color: #A8D0F7;
+            padding-left: 0;
+        }
+        
         .mode-toggle {
             position: fixed;
             top: 20px;
@@ -205,17 +237,18 @@
         
         .input-icon {
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: #8B9AAF;
             font-size: 16px;
+            z-index: 10;
         }
-        
+
         .input-with-icon {
-            padding-left: 40px;
+            padding-left: 44px !important;
         }
-        
+                
         .error-message {
             color: #FF6B6B;
             font-size: 0.875rem;
@@ -227,10 +260,69 @@
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
+        
+        .field-label {
+            color: #2D3748;
+            font-weight: 500;
+        }
+        
+        .dark .field-label {
+            color: #E8E4F6;
+        }
+        
+        .checkbox-wrapper {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .checkbox-wrapper input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #8B9AAF;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            margin-right: 12px;
+            margin-top: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .checkbox-wrapper input[type="checkbox"] {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: #A8D0F7;
+        }
+        
+        .checkbox-wrapper input[type="checkbox"]:checked {
+            background: #70B8F5;
+            border-color: #70B8F5;
+        }
+        
+        .checkbox-wrapper input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            left: 3px;
+            top: 1px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .checkbox-label {
+            color: #8B9AAF;
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+        
+        .dark .checkbox-label {
+            color: #A8D0F7;
+        }
     </style>
 </head>
 
-<body class="light min-h-screen relative overflow-hidden">
+<body class="light min-h-screen transition-all duration-300 overflow-y-auto">
+<div class="bg-wrapper"></div>
     <!-- Background Blobs -->
     <div class="floating-blob"></div>
     <div class="floating-blob"></div>
@@ -245,18 +337,23 @@
     <nav class="fixed top-0 left-0 right-0 z-40 glass-effect">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-2">
+                <a href="{% url 'landing' %}" class="flex items-center space-x-2 hover:scale-105 transition-transform duration-200">
                     <div class="w-10 h-10 bg-gradient-to-br from-brand-blue to-brand-deep-blue rounded-xl flex items-center justify-center">
                         <i class="fas fa-vault text-white text-lg"></i>
                     </div>
                     <span class="text-xl font-bold text-gradient">VocabVault</span>
-                </div>
+                </a>
+                
+                <a href="{% url 'landing' %}" class="flex items-center space-x-2 px-4 py-2 rounded-xl glass-effect hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200">
+                    <i class="fas fa-home text-brand-blue"></i>
+                    <span class="text-sm font-medium field-label">Home</span>
+                </a>
             </div>
         </div>
     </nav>
     
     <!-- Login Page -->
-    <div class="min-h-screen flex items-center justify-center px-4 pt-16">
+    <div class="min-h-screen flex items-center justify-center px-4 pt-32 pb-16">
         <div class="max-w-md w-full">
             <div class="glass-effect rounded-2xl p-8 card-hover fade-in">
                 <div class="text-center mb-8">
@@ -264,43 +361,43 @@
                     <p class="text-brand-gray">Sign in to your VocabVault account</p>
                 </div>
                 
-                <!-- Django Form would go here -->
+                <!-- Django Form -->
                 <form method="post" action="{% url 'login' %}" class="space-y-6">
                     {% csrf_token %}
                     
-                    <!-- Username Field -->
-                    <div class="relative">
-                        <i class="input-icon fas fa-user"></i>
-                        <input 
-                            type="text" 
-                            id="username"
-                            name="username" 
-                            placeholder="Username or Email"
-                            class="form-field w-full px-4 py-3 input-with-icon rounded-xl focus:ring-2 focus:ring-brand-blue"
-                            required
-                        />
-                    </div>
-                    
-                    <!-- Password Field -->
-                    <div class="relative">
-                        <i class="input-icon fas fa-lock"></i>
-                        <input 
-                            type="password" 
-                            name="password"
-                            id="password" 
-                            placeholder="Password"
-                            class="form-field w-full px-4 py-3 input-with-icon rounded-xl focus:ring-2 focus:ring-brand-blue"
-                            required
-                        />
-                    </div>
+                <!-- Username Field -->
+                <div class="relative">
+                    <i class="input-icon fas fa-user"></i>
+                    <input 
+                        type="text" 
+                        id="username"
+                        name="username" 
+                        placeholder="Enter your Username"
+                        class="form-field w-full py-3 pr-4 input-with-icon rounded-xl focus:ring-2 focus:ring-brand-blue"
+                        required
+                    />
+                </div>
+
+                <!-- Password Field -->
+                <div class="relative">
+                    <i class="input-icon fas fa-lock"></i>
+                    <input 
+                        type="password" 
+                        name="password"
+                        id="password" 
+                        placeholder="Password"
+                        class="form-field w-full py-3 pr-4 input-with-icon rounded-xl focus:ring-2 focus:ring-brand-blue"
+                        required
+                    />
+                </div>
                     
                     <!-- Remember Me & Forgot Password -->
                     <div class="flex items-center justify-between">
-                        <label class="flex items-center">
-                            <input type="checkbox" name="remember" class="mr-2 rounded">
-                            <span class="text-sm text-brand-gray">Remember me</span>
-                        </label>
-                        <a href="#" class="text-sm text-brand-blue hover:text-brand-deep-blue">Forgot password?</a>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" name="remember" id="remember">
+                            <label for="remember" class="checkbox-label">Remember me</label>
+                        </div>
+                        <a href="#" class="text-sm text-brand-blue hover:text-brand-deep-blue transition-colors">Forgot password?</a>
                     </div>
                     
                     <!-- Submit Button -->
@@ -319,13 +416,13 @@
                 
                 <!-- Social Login -->
                 <div class="space-y-3">
-                    <button class="social-btn w-full py-3 px-6 rounded-xl bg-white/80 dark:bg-black/20 border border-brand-gray/30 flex items-center justify-center hover:bg-white/90 dark:hover:bg-black/30">
+                    <button class="social-btn w-full py-3 px-6 rounded-xl form-field border-brand-gray/30 flex items-center justify-center">
                         <i class="fab fa-google mr-2 text-red-500"></i>
-                        Continue with Google
+                        <span class="field-label">Continue with Google</span>
                     </button>
-                    <button class="social-btn w-full py-3 px-6 rounded-xl bg-white/80 dark:bg-black/20 border border-brand-gray/30 flex items-center justify-center hover:bg-white/90 dark:hover:2-black/30">
+                    <button class="social-btn w-full py-3 px-6 rounded-xl form-field border-brand-gray/30 flex items-center justify-center">
                         <i class="fab fa-facebook mr-2 text-blue-600"></i>
-                        Continue with Facebook
+                        <span class="field-label">Continue with Facebook</span>
                     </button>
                 </div>
                 
@@ -333,7 +430,7 @@
                 <div class="text-center mt-8">
                     <p class="text-brand-gray">
                         Don't have an account? 
-                        <a href="signup.html" class="text-brand-blue hover:text-brand-deep-blue font-semibold">
+                        <a href="{% url 'signup' %}" class="text-brand-blue hover:text-brand-deep-blue font-semibold transition-colors">
                             Sign up
                         </a>
                     </p>
@@ -352,23 +449,41 @@
                 body.classList.add('dark');
                 modeIcon.classList.remove('fa-moon');
                 modeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
             } else {
                 body.classList.remove('dark');
                 body.classList.add('light');
                 modeIcon.classList.remove('fa-sun');
                 modeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
             }
         }
-        
-        // Form validation and animations
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Auto-load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            const modeIcon = document.querySelector('.mode-toggle i');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.remove('light');
+                document.body.classList.add('dark');
+                modeIcon.classList.remove('fa-moon');
+                modeIcon.classList.add('fa-sun');
+            } else {
+                document.body.classList.remove('dark');
+                document.body.classList.add('light');
+                modeIcon.classList.remove('fa-sun');
+                modeIcon.classList.add('fa-moon');
+            }
+            
+            // Form validation and animations
             const form = document.querySelector('form');
             
             form.addEventListener('submit', function(e) {
                 const submitBtn = form.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
                 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing in...';
                 submitBtn.disabled = true;
                 
                 // For demo purposes, we'll reset after 2 seconds
