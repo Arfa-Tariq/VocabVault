@@ -28,21 +28,23 @@
     <!-- Header Navigation -->
     <header class="bg-white shadow-lg sticky top-0 z-50">
         <nav class="container mx-auto px-4">
+
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="{% url 'dashboard' %}" class="text-2xl font-bold text-vocab-burgundy">
-                        VocabVault
-                    </a>
-                </div>
+<div class="flex items-center space-x-2 pl-2">
+    <span class="text-2xl font-black text-vocab-burgundy tracking-wider">
+        VocabVault
+    </span>
+</div>
+
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="{% url 'dashboard' %}" 
-                           class="text-vocab-burgundy hover:bg-vocab-cream hover:text-vocab-burgundy px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                            Dashboard
-                        </a>
+<a href="{% url 'dashboard' %}" 
+class="{% if request.resolver_match.url_name == 'dashboard' %}bg-blue-500 text-white{% else %}text-vocab-burgundy hover:bg-vocab-cream hover:text-vocab-burgundy{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-colors">
+Dashboard
+</a>
                         <a href="{% url 'vocab' %}" 
                            class="text-gray-600 hover:bg-vocab-cream hover:text-vocab-burgundy px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Vocabulary
@@ -80,10 +82,10 @@
             <!-- Mobile Navigation Menu -->
             <div class="md:hidden" id="mobile-menu" style="display: none;">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-                    <a href="{% url 'dashboard' %}" 
-                       class="text-vocab-burgundy hover:bg-vocab-cream block px-3 py-2 rounded-md text-base font-medium">
-                        Dashboard
-                    </a>
+<a href="{% url 'dashboard' %}" 
+   class="{% if request.resolver_match.url_name == 'dashboard' %}bg-blue-500 text-white{% else %}text-vocab-burgundy hover:bg-vocab-cream{% endif %} block px-3 py-2 rounded-md text-base font-medium">
+    Dashboard
+</a>
                     <a href="{% url 'vocab' %}" 
                        class="text-gray-600 hover:bg-vocab-cream hover:text-vocab-burgundy block px-3 py-2 rounded-md text-base font-medium">
                         Vocabulary
